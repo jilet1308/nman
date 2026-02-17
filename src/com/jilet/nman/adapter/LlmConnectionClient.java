@@ -6,6 +6,7 @@ import com.anthropic.client.okhttp.AnthropicOkHttpClient;
 import com.anthropic.models.messages.MessageCreateParams;
 import com.anthropic.models.messages.Model;
 import com.anthropic.models.messages.StructuredMessageCreateParams;
+import com.jilet.nman.common.ExitUtil;
 import com.jilet.nman.response.ResponseFormat;
 import com.jilet.nman.service.ConfigurationService;
 import com.jilet.nman.type.LlmModelDescriptor;
@@ -61,8 +62,7 @@ public class LlmConnectionClient {
         var response = client.chat().completions().create(params).choices().getFirst().message().content().orElse(null);
 
         if(response == null){
-            System.out.println("Invalid response from the LLM. Please try again later.");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Invalid response from the LLM. Please try again later.");
         }
 
         return response;
@@ -83,8 +83,7 @@ public class LlmConnectionClient {
         var response = client.messages().create(params).content().getFirst().text().orElse(null);
 
         if (response == null || !response.isValid()) {
-            System.out.println("Invalid response from the LLM. Please try again later.");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Invalid response from the LLM. Please try again later.");
         }
 
         return response.text();

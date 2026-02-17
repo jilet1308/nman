@@ -1,5 +1,6 @@
 package com.jilet.nman.cli;
 
+import com.jilet.nman.common.ExitUtil;
 import com.jilet.nman.service.ConfigurationService;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -35,8 +36,7 @@ public class SetupArgs implements Callable<Integer> {
     @Override
     public Integer call() {
         if (providerArg.isBlank() && model.isBlank() && apiKey.isBlank() && home.isBlank()) {
-            System.out.println("Should provide at least one option to the setup command!");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Should provide at least one option to the setup command!");
         }
 
         if (!providerArg.isBlank()) {

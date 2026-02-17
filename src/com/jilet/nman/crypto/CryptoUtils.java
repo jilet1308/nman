@@ -1,5 +1,7 @@
 package com.jilet.nman.crypto;
 
+import com.jilet.nman.common.ExitUtil;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
@@ -40,8 +42,7 @@ public class CryptoUtils {
 
             return Base64.getEncoder().encodeToString(combined);
         } catch (Exception e) {
-            System.out.println("Encryption failed");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Encryption failed");
         }
 
         return null;
@@ -62,8 +63,7 @@ public class CryptoUtils {
 
             return new String(cipher.doFinal(encrypted));
         } catch (Exception e) {
-            System.out.println("Decryption failed");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Decryption failed");
         }
         return null;
     }

@@ -1,6 +1,7 @@
 package com.jilet.nman.service;
 
 
+import com.jilet.nman.common.ExitUtil;
 import com.jilet.nman.crypto.CryptoUtils;
 import com.jilet.nman.type.LlmModelDescriptor;
 import com.jilet.nman.type.Provider;
@@ -40,8 +41,7 @@ public class ConfigurationService {
         } catch (FileAlreadyExistsException e) {
             //Do nothing
         } catch (IOException e) {
-            System.out.println("Config file could not be created.");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Config file could not be created.");
         }
     }
 
@@ -59,17 +59,10 @@ public class ConfigurationService {
                 Files.createDirectories(docHome);
                 setDocumentHome(String.valueOf(docHome));
             } catch (IOException e) {
-                System.out.println("Could not create default directory for documents. Check permissions.");
-                System.exit(1);
+                ExitUtil.exitWithErrorMessage("Could not create default directory for documents. Check permissions.");
             }
         }
     }
-
-    public static boolean validateDocumentHomeAvailable() {
-        getDocumentHome();
-        return true;
-    }
-
 
     private static void replaceOrAddValue(Path cfgPath, String key, String newValue) throws IOException {
         List<String> lines = Files.readAllLines(cfgPath);
@@ -100,7 +93,7 @@ public class ConfigurationService {
                     .findFirst()
                     .orElse(null);
         } catch (IOException e) {
-            System.out.printf("Could not read configuration key: %s from config file: %s%n", key, cfgPath);
+            ExitUtil.exitWithErrorMessage("Could not read configuration key: %s from config file: %s", key, cfgPath);
         }
         return null;
     }
@@ -108,8 +101,7 @@ public class ConfigurationService {
     public static Provider getProvider() {
         String providerName = getValue(CONFIG_FILE_PATH, PROVIDER_KEY);
         if (providerName == null) {
-            System.out.println("Provider name is invalid. Please set it up correctly again with the setup command.");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Provider name is invalid. Please set it up correctly again with the setup command.");
         }
         return Provider.valueOf(providerName);
     }
@@ -117,8 +109,7 @@ public class ConfigurationService {
     public static LlmModelDescriptor getLlmModelDescriptor() {
         String modelName = getValue(CONFIG_FILE_PATH, MODEL_KEY);
         if (modelName == null) {
-            System.out.println("Model name is invalid. Please set it up correctly again with the setup command.");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Model name is invalid. Please set it up correctly again with the setup command.");
         }
         return LlmModelDescriptor.valueOf(modelName);
     }
@@ -126,13 +117,11 @@ public class ConfigurationService {
     public static Path getDocumentHome() {
         String documentHome = getValue(CONFIG_FILE_PATH, DOCUMENT_HOME_KEY);
         if (documentHome == null) {
-            System.out.println("Document home not set. Please set it up correctly again with the setup command.");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Document home not set. Please set it up correctly again with the setup command.");
         }
         Path documentHomePath = Path.of(documentHome);
         if (!Files.exists(documentHomePath) || !Files.isDirectory(documentHomePath)) {
-            System.out.println("Document home path is invalid. Please set it up correctly as a folder with the setup command");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Document home path is invalid. Please set it up correctly as a folder with the setup command");
         }
         return documentHomePath;
     }
@@ -140,8 +129,7 @@ public class ConfigurationService {
     public static String getApiKey() {
         String apiKey = getValue(CONFIG_FILE_PATH, API_KEY_KEY);
         if (apiKey == null) {
-            System.out.println("API Key is invalid. Please set it up correctly again with the setup command.");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("API Key is invalid. Please set it up correctly again with the setup command.");
         }
         return CryptoUtils.decrypt(apiKey);
     }
@@ -154,15 +142,13 @@ public class ConfigurationService {
                 .orElse(null);
 
         if (provider == null) {
-            System.out.printf("Could not set the provider. Are you sure this is a valid provider? \"%s\"%n", providerArg);
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Could not set the provider. Are you sure this is a valid provider? \"%s\"%n", providerArg);
         }
 
         try {
             replaceOrAddValue(CONFIG_FILE_PATH, PROVIDER_KEY, provider.name());
         } catch (IOException e) {
-            System.out.println("Failed to set provider.");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Failed to set provider.");
         }
     }
 
@@ -173,30 +159,26 @@ public class ConfigurationService {
                 .orElse(null);
 
         if (descriptor == null) {
-            System.out.printf("Could not set the model. Are you sure this is a valid model? \"%s\"%n", modelArg);
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Could not set the model. Are you sure this is a valid model? \"%s\"%n", modelArg);
         }
 
         try {
             replaceOrAddValue(CONFIG_FILE_PATH, MODEL_KEY, descriptor.name());
         } catch (IOException e) {
-            System.out.println("Failed to set model.");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Failed to set model.");
         }
     }
 
     public static void setApiKey(String apiKey) {
         if (apiKey == null) {
-            System.out.println("API key can not be empty!");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("API key can not be empty!");
         }
 
         String encrypted = CryptoUtils.encrypt(apiKey);
         try {
             replaceOrAddValue(CONFIG_FILE_PATH, API_KEY_KEY, encrypted);
         } catch (IOException e) {
-            System.out.println("Could not set up the API key.");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Could not set up the API key.");
         }
     }
 
@@ -204,8 +186,7 @@ public class ConfigurationService {
         try {
             replaceOrAddValue(CONFIG_FILE_PATH, DOCUMENT_HOME_KEY, documentHomeArg);
         } catch (IOException e) {
-            System.out.println("Could not set up document home.");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Could not set up document home.");
         }
     }
 

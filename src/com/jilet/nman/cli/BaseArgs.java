@@ -68,13 +68,11 @@ public class BaseArgs implements Callable<Integer> {
 
     private void validateLang() {
         if (lang.isBlank()) {
-            System.out.println("Lang argument can not be empty!");
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("Lang argument can not be empty!");
         }
 
         if (Arrays.stream(Lang.values()).noneMatch(l -> Arrays.stream(l.getAlternateNames()).anyMatch(lang::equalsIgnoreCase))) {
-            System.out.printf("%s is not a valid supported language !%n", lang);
-            System.exit(1);
+            ExitUtil.exitWithErrorMessage("%s is not a valid supported language !", lang);
         }
     }
 
