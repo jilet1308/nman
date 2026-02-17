@@ -33,9 +33,14 @@ public class SetupArgs implements Callable<Integer> {
             defaultValue = "")
     String home;
 
+    @Option(names = {"--maxTokens", "-t"},
+            description = "Max tokens to use when generating documents (default: 8192)",
+            defaultValue = "")
+    String maxTokens;
+
     @Override
     public Integer call() {
-        if (providerArg.isBlank() && model.isBlank() && apiKey.isBlank() && home.isBlank()) {
+        if (providerArg.isBlank() && model.isBlank() && apiKey.isBlank() && home.isBlank() && maxTokens.isBlank()) {
             ExitUtil.exitWithErrorMessage("Should provide at least one option to the setup command!");
         }
 
@@ -50,6 +55,9 @@ public class SetupArgs implements Callable<Integer> {
         }
         if (!home.isBlank()) {
             ConfigurationService.setDocumentHome(home);
+        }
+        if(!maxTokens.isBlank()){
+            ConfigurationService.setMaxTokens(maxTokens);
         }
 
         return 0;

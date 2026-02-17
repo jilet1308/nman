@@ -17,6 +17,7 @@ import java.util.List;
 
 public class ConfigurationService {
     private static final String HOME_PROPERTY = "user.home";
+    private static final Long DEFAULT_MAX_TOKENS = 8192L;
     private static final String DEFAULT_DOCUMENT_HOME_FOLDER_NAME = "nmanlib";
     private static final String CONFIG_FILE_NAME = ".nmancfg";
     private static final String CONFIG_KEY_VALUE_SEPARATOR = ":";
@@ -24,6 +25,7 @@ public class ConfigurationService {
     private static final String MODEL_KEY = "MODEL";
     private static final String API_KEY_KEY = "KEY";
     private static final String DOCUMENT_HOME_KEY = "DOC_HOME";
+    private static final String MAX_TOKENS_KEY = "MAX_TOKENS";
     public static final Path CONFIG_FILE_PATH = buildConfigDirectory();
 
     private static Path buildConfigDirectory() {
@@ -114,6 +116,19 @@ public class ConfigurationService {
         return LlmModelDescriptor.valueOf(modelName);
     }
 
+    public static Long getMaxTokens() {
+        String maxTokensStr = getValue(CONFIG_FILE_PATH, MAX_TOKENS_KEY);
+        if (maxTokensStr == null) {
+            return DEFAULT_MAX_TOKENS; // default value
+        }
+        try {
+            return Long.parseLong(maxTokensStr);
+        } catch (NumberFormatException e) {
+            ExitUtil.exitWithErrorMessage("Max tokens value is invalid. Please set it up correctly again with the setup command.");
+            return null;
+        }
+    }
+
     public static Path getDocumentHome() {
         String documentHome = getValue(CONFIG_FILE_PATH, DOCUMENT_HOME_KEY);
         if (documentHome == null) {
@@ -187,6 +202,15 @@ public class ConfigurationService {
             replaceOrAddValue(CONFIG_FILE_PATH, DOCUMENT_HOME_KEY, documentHomeArg);
         } catch (IOException e) {
             ExitUtil.exitWithErrorMessage("Could not set up document home.");
+        }
+    }
+
+    public static void setMaxTokens(String maxTokensArg){
+        try{
+            replaceOrAddValue(CONFIG_FILE_PATH, MAX_TOKENS_KEY, maxTokensArg);
+        }
+        catch (IOException e){
+            ExitUtil.exitWithErrorMessage("Could not set up max tokens.");
         }
     }
 

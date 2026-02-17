@@ -2,9 +2,9 @@
 
 1) ~~Read existing document if it already exists with the base command (override flag)~~ (10:18 17-02-2026)
 2) ~~Implement OpenAI~~ (10:48 17-02-2026)
-3) Replace sout+System.exit with ExitUtil
-4) Infer the provider from model name
-5) Add configurable max. token length
+3) ~~Replace sout+System.exit with ExitUtil~~ (10:57 17-02-2026)
+4) Infer the provider from model name 
+5) ~~Add configurable max. token length~~ (13:08 17-02-2026)
 6) Better format for the generated document before parsing it to the file
 7) Add 'glow exists' check
 8) Add . (dot) loading animation while the document is being generated

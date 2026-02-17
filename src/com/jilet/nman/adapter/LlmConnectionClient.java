@@ -21,7 +21,6 @@ import com.openai.models.chat.completions.StructuredChatCompletionCreateParams;
 public class LlmConnectionClient {
 
     private static final String BASE_PROMPT = "Write like a man page. Write sections in markdown.";
-    private static final Long MAX_TOKENS = 8192L;
 
     public static ResponseFormat sendRequest(Provider provider,
                                    LlmModelDescriptor model,
@@ -53,7 +52,7 @@ public class LlmConnectionClient {
                 .build();
 
         StructuredChatCompletionCreateParams<ResponseFormat> params = ChatCompletionCreateParams.builder()
-                .maxCompletionTokens(MAX_TOKENS)
+                .maxCompletionTokens(ConfigurationService.getMaxTokens())
                 .addUserMessage(combinedMessageOf(lang, func, promptExtras))
                 .model(actualModel)
                 .responseFormat(ResponseFormat.class)
@@ -74,7 +73,7 @@ public class LlmConnectionClient {
                 .build();
 
         StructuredMessageCreateParams<ResponseFormat> params = MessageCreateParams.builder()
-                .maxTokens(MAX_TOKENS)
+                .maxTokens(ConfigurationService.getMaxTokens())
                 .addUserMessage(combinedMessageOf(lang, func, promptExtras))
                 .model(actualModel)
                 .outputConfig(ResponseFormat.class)
