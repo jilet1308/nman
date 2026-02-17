@@ -1,7 +1,7 @@
 ## TODOS:
 
-1) Read existing document if it already exists with the base command (override flag)
-2) Implement OpenAI
+1) ~~Read existing document if it already exists with the base command (override flag)~~ (10:18 17-02-2026)
+2) ~~Implement OpenAI~~ (10:48 17-02-2026)
 3) Replace sout+System.exit with ExitUtil
 4) Infer the provider from model name
 5) Add configurable max. token length
