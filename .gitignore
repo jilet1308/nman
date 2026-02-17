@@ -5,10 +5,7 @@ target/
 .kotlin
 
 ### IntelliJ IDEA ###
-!/.idea/**
-.idea/encodings.xml
-.idea/misc.xml
-.idea/vcs.xml
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -39,3 +36,6 @@ api-key.txt
 
 ### Mac OS ###
 .DS_Store
+
+
+dependency-reduced-pom.xml

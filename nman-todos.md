@@ -9,9 +9,10 @@
 7) Add 'glow exists' check
 8) Add . (dot) loading animation while the document is being generated
 9) Refine the help section
-10) Add to PATH and alias script
-11) Curl & wget install script
-12) Brew formulae
+10) Better crypto (or remove it all together ?)
+11) Add to PATH and alias script 
+12) Curl & wget install script
+13) Brew formulae
 
 ## Future Plans
 
