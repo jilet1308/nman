@@ -27,7 +27,7 @@ public class LlmConnectionClient {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final Long MAX_TOKENS = 8192L;
 
-    public static void sendRequest(Provider provider,
+    public static ResponseFormat sendRequest(Provider provider,
                                    LlmModelDescriptor model,
                                    String lang,
                                    String func,
@@ -50,10 +50,10 @@ public class LlmConnectionClient {
         }
 
         if (provider == Provider.Anthropic) {
-            doHandleAnthropic((Model) (actualModel), lang, func, promptExtras);
+            return doHandleAnthropic((Model) (actualModel), lang, func, promptExtras);
         }
 
-
+        return null;
     }
 
 
@@ -61,7 +61,7 @@ public class LlmConnectionClient {
         return BASE_PROMPT + "(" + lang + ":" + func + ") <extras>" + promptExtras + "</extras>";
     }
 
-    private static void doHandleAnthropic(Model actualModel, String lang, String func, String promptExtras) {
+    private static ResponseFormat doHandleAnthropic(Model actualModel, String lang, String func, String promptExtras) {
         AnthropicClient client = AnthropicOkHttpClient.builder()
                 .apiKey(ConfigurationService.getApiKey())
                 .build();
@@ -80,9 +80,7 @@ public class LlmConnectionClient {
             System.exit(1);
         }
 
-        ResponseFormat formattedResponse = response.text();
-        Path generatedDoc = FileService.createDocument(ConfigurationService.getDocumentHome().toString(), lang, func, formattedResponse);
-        RendererService.renderDocument(generatedDoc.toString());
+        return response.text();
     }
 
 }

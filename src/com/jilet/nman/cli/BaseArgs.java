@@ -1,13 +1,18 @@
 package com.jilet.nman.cli;
 
 import com.jilet.nman.adapter.LlmConnectionClient;
+import com.jilet.nman.common.ExitUtil;
+import com.jilet.nman.response.ResponseFormat;
 import com.jilet.nman.service.ConfigurationService;
+import com.jilet.nman.service.FileService;
+import com.jilet.nman.service.RendererService;
 import com.jilet.nman.type.Lang;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
 
@@ -48,12 +53,14 @@ public class BaseArgs implements Callable<Integer> {
         }
 
         validateLang();
-        LlmConnectionClient.sendRequest(
-                ConfigurationService.getProvider(),
-                ConfigurationService.getLlmModelDescriptor(),
-                lang,
-                func,
-                prompt);
+
+        if(override){
+            Path generatedDoc = generateDocument();
+            RendererService.renderDocument(generatedDoc.toString());
+        }
+        else{
+            handleDefault();
+        }
 
         return 0;
     }
@@ -70,6 +77,34 @@ public class BaseArgs implements Callable<Integer> {
             System.exit(1);
         }
     }
+
+    private void handleDefault(){
+        Path cached = getCachedDocument();
+        if(cached != null){
+            RendererService.renderDocument(cached.toString());
+        }
+        else{
+            Path generatedDoc = generateDocument();
+            RendererService.renderDocument(generatedDoc.toString());
+        }
+    }
+
+    private Path getCachedDocument(){
+        Path cachedDocPath = FileService.getFunctionDocPath(func);
+        if(cachedDocPath != null){
+            return cachedDocPath;
+        }
+        return null;
+    }
+
+    private Path generateDocument(){
+        ResponseFormat formattedResponse = LlmConnectionClient.sendRequest(ConfigurationService.getProvider(), ConfigurationService.getLlmModelDescriptor(), lang, func, prompt);
+        if(formattedResponse == null){
+            ExitUtil.exitWithErrorMessage("Failed to get a valid response from the LLM. Please try again later.");
+        }
+        return FileService.createDocument(ConfigurationService.getDocumentHome().toString(), lang, func, formattedResponse);
+    }
+
 
 
 }

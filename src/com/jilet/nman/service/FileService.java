@@ -12,7 +12,7 @@ public class FileService {
 
     public static final String MARKDOWN_SUFFIX = ".md";
 
-    public static Optional<Path> getAbsolutePathOf(String name) {
+    private static Optional<Path> getAbsolutePathOf(String name) {
         try {
             return Files.walk(ConfigurationService.getDocumentHome())
                     .filter(p -> p.getFileName().toString().equals(name))
@@ -21,6 +21,10 @@ public class FileService {
         } catch (IOException e) {
             return Optional.empty();
         }
+    }
+
+    public static Path getFunctionDocPath(String func){
+        return FileService.getAbsolutePathOf(func + MARKDOWN_SUFFIX).orElse(null);
     }
 
     public static void createDirIfNotExists(String base, String folderName) {
