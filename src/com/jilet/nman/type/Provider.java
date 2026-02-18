@@ -1,17 +1,21 @@
 package com.jilet.nman.type;
 
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum Provider {
-
-    // alternateNames[0] is the canon name for the provider
-    Anthropic(new String[]{"Anthropic", "claude"}),
-    OpenAI(new String[]{"OpenAI", "chatgpt", "gpt"});
+    Anthropic(new LlmModelDescriptor[]{
+        LlmModelDescriptor.OPUS_4_6,
+        LlmModelDescriptor.SONNET_4_5,
+        LlmModelDescriptor.HAIKU_4_5
+    }),
+    OpenAI(new LlmModelDescriptor[]{
+        LlmModelDescriptor.GPT_5_2,
+        LlmModelDescriptor.GPT_MINI_5,
+        LlmModelDescriptor.GPT_NANO_5
+    });
 
     @Getter
-    private final String[] alternateNames;
-
+    private final LlmModelDescriptor[] models;
 }

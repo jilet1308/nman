@@ -12,12 +12,6 @@ import java.util.concurrent.Callable;
         description = "Alter/Setup configurations")
 public class SetupArgs implements Callable<Integer> {
 
-    @Option(names = {"--provider", "-p"},
-            description = "LLM provider to generate pages nman pages. Case insensitive. " +
-                    "\"Round\" arguments are also accepted. (e.g. claude, Claude, cLauDe, anthropic, AnThropic",
-            defaultValue = "")
-    String providerArg;
-
     @Option(names = {"--model", "-m"},
             description = "Model to use from the given provider",
             defaultValue = "")
@@ -40,13 +34,10 @@ public class SetupArgs implements Callable<Integer> {
 
     @Override
     public Integer call() {
-        if (providerArg.isBlank() && model.isBlank() && apiKey.isBlank() && home.isBlank() && maxTokens.isBlank()) {
+        if (model.isBlank() && apiKey.isBlank() && home.isBlank() && maxTokens.isBlank()) {
             ExitUtil.exitWithErrorMessage("Should provide at least one option to the setup command!");
         }
 
-        if (!providerArg.isBlank()) {
-            ConfigurationService.setProvider(providerArg);
-        }
         if (!model.isBlank()) {
             ConfigurationService.setModel(model);
         }

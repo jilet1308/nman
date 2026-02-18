@@ -149,15 +149,14 @@ public class ConfigurationService {
         return CryptoUtils.decrypt(apiKey);
     }
 
-
-    public static void setProvider(String providerArg) {
+    private static void setProvider(LlmModelDescriptor childModel) {
         Provider provider = Arrays.stream(Provider.values())
-                .filter(prov -> Arrays.stream(prov.getAlternateNames()).anyMatch(alternateName -> alternateName.equalsIgnoreCase(providerArg)))
+                .filter(p -> Arrays.asList(p.getModels()).contains(childModel))
                 .findFirst()
                 .orElse(null);
 
-        if (provider == null) {
-            ExitUtil.exitWithErrorMessage("Could not set the provider. Are you sure this is a valid provider? \"%s\"%n", providerArg);
+        if(provider == null){
+            ExitUtil.exitWithErrorMessage("Could not infer provider from model. Please set up the model correctly again with the setup command.");
         }
 
         try {
@@ -179,6 +178,7 @@ public class ConfigurationService {
 
         try {
             replaceOrAddValue(CONFIG_FILE_PATH, MODEL_KEY, descriptor.name());
+            setProvider(descriptor);
         } catch (IOException e) {
             ExitUtil.exitWithErrorMessage("Failed to set model.");
         }
