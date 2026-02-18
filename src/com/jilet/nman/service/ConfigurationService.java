@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class ConfigurationService {
     private static final String HOME_PROPERTY = "user.home";
@@ -26,6 +27,7 @@ public class ConfigurationService {
     private static final String API_KEY_KEY = "KEY";
     private static final String DOCUMENT_HOME_KEY = "DOC_HOME";
     private static final String MAX_TOKENS_KEY = "MAX_TOKENS";
+    private static final String CUSTOM_RENDERER_KEY = "CUSTOM_RENDERER";
     public static final Path CONFIG_FILE_PATH = buildConfigDirectory();
 
     private static Path buildConfigDirectory() {
@@ -149,6 +151,10 @@ public class ConfigurationService {
         return CryptoUtils.decrypt(apiKey);
     }
 
+    public static Optional<String> getCustomRenderer() {
+         return Optional.ofNullable(getValue(CONFIG_FILE_PATH, CUSTOM_RENDERER_KEY));
+    }
+
     private static void setProvider(LlmModelDescriptor childModel) {
         Provider provider = Arrays.stream(Provider.values())
                 .filter(p -> Arrays.asList(p.getModels()).contains(childModel))
@@ -211,6 +217,15 @@ public class ConfigurationService {
         }
         catch (IOException e){
             ExitUtil.exitWithErrorMessage("Could not set up max tokens.");
+        }
+    }
+
+    public static void setCustomRenderer(String customRendererCommand){
+        try{
+            replaceOrAddValue(CONFIG_FILE_PATH, CUSTOM_RENDERER_KEY, customRendererCommand);
+        }
+        catch (IOException e){
+            ExitUtil.exitWithErrorMessage("Could not set up custom renderer command.");
         }
     }
 

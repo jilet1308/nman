@@ -7,26 +7,28 @@ import java.io.IOException;
 public class RendererService {
 
     //Amazing cli application btw
-    private static final String RENDERER_COMMAND = "glow";
+    private static final String DEFAULT_RENDERER_COMMAND = "glow";
 
     public static void checkRendererAvailable() {
+        String command = ConfigurationService.getCustomRenderer().orElse(DEFAULT_RENDERER_COMMAND);
         try {
-            int process = new ProcessBuilder(RENDERER_COMMAND, "--version")
+            int process = new ProcessBuilder(command, "--version")
                     .inheritIO()
                     .start()
                     .waitFor();
 
             if(process != 0) {
-                ExitUtil.exitWithErrorMessage("Renderer %s is not available. Please install it and try again.", RendererService.RENDERER_COMMAND);
+                ExitUtil.exitWithErrorMessage("Renderer %s is not available. Please install it and try again.", command);
             }
         } catch (IOException | InterruptedException e) {
-            ExitUtil.exitWithErrorMessage("Renderer %s is not available. Please install it and try again.", RendererService.RENDERER_COMMAND);
+            ExitUtil.exitWithErrorMessage("Renderer %s is not available. Please install it and try again.", command);
         }
     }
 
     public static void renderDocument(String name) {
+        String command = ConfigurationService.getCustomRenderer().orElse(DEFAULT_RENDERER_COMMAND);
         try {
-            new ProcessBuilder(RENDERER_COMMAND, name)
+            new ProcessBuilder(command, name)
                     .inheritIO()
                     .start()
                     .waitFor();

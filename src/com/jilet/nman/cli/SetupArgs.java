@@ -32,9 +32,14 @@ public class SetupArgs implements Callable<Integer> {
             defaultValue = "")
     String maxTokens;
 
+    @Option(names = {"--customRenderer", "-c"},
+            description = "Custom command to render the generated documents (default: glow)",
+            defaultValue = "")
+    String customRenderer;
+
     @Override
     public Integer call() {
-        if (model.isBlank() && apiKey.isBlank() && home.isBlank() && maxTokens.isBlank()) {
+        if(model.isBlank() && apiKey.isBlank() && home.isBlank() && maxTokens.isBlank() && customRenderer.isBlank()) {
             ExitUtil.exitWithErrorMessage("Should provide at least one option to the setup command!");
         }
 
@@ -49,6 +54,9 @@ public class SetupArgs implements Callable<Integer> {
         }
         if(!maxTokens.isBlank()){
             ConfigurationService.setMaxTokens(maxTokens);
+        }
+        if(!customRenderer.isBlank()) {
+            ConfigurationService.setCustomRenderer(customRenderer);
         }
 
         return 0;
