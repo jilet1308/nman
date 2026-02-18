@@ -42,14 +42,14 @@ public class FileService {
         var path = Path.of(base, lang, function + MARKDOWN_SUFFIX);
         try {
             var content = String.join("\n",
-                    response.getName(),
-                    response.getLibrary(),
-                    response.getSynopsis(),
-                    response.getDescription(),
-                    response.getReturnValue(),
-                    response.getNotes(),
-                    response.getSeeAlso(),
-                    response.getExample()
+                    "## Function:", response.getName(),
+                    "## Library:", response.getLibrary(),
+                    "## Synopsis:", response.getSynopsis(),
+                    "## Description:", response.getDescription(),
+                    "## Returns:", response.getReturnValue(),
+                    "## Notes:", response.getNotes(),
+                    "## See Also:", response.getSeeAlso(),
+                    "## Usage Example:", response.getExample()
             );
             Files.writeString(path, content);
         } catch (IOException e) {

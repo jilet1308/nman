@@ -7,13 +7,14 @@
 5) ~~Add configurable max. token length~~ (13:08 17-02-2026)
 6) Better format for the generated document before parsing it to the file
 7) ~~Model ls command to list supported models and their providers~~ (08:58 18-02-2026)
-8) Add 'glow exists' check
-9) Add . (dot) loading animation while the document is being generated
-10) Refine the help section
-11) Better crypto (or remove it all together ?)
-12) Add to PATH and alias script  
-13) Curl & wget install script 
-14) Brew formulae
+8) pom re-organization and cleanup
+9) Add 'glow exists' check
+10) Add . (dot) loading animation while the document is being generated
+11) Refine the help section
+12) Better crypto (or remove it all together ?)
+13) Add to PATH and alias script  
+14) Curl & wget install script 
+15) Brew formulae
 
 ## Future Plans
 
