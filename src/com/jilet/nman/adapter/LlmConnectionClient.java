@@ -17,6 +17,9 @@ import com.openai.models.ChatModel;
 import com.openai.models.chat.completions.ChatCompletionCreateParams;
 import com.openai.models.chat.completions.StructuredChatCompletionCreateParams;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 
 public class LlmConnectionClient {
 
@@ -31,11 +34,13 @@ public class LlmConnectionClient {
         Object actualModel = LlmModel.MODELS.get(model);
 
         if (provider == Provider.OpenAI) {
-            return doHandleOpenAI((ChatModel) (actualModel), lang, func, promptExtras);
+            return parseDotsWhileExecuting(
+                    CompletableFuture.supplyAsync(() -> doHandleOpenAI((ChatModel) (actualModel), lang, func, promptExtras)));
         }
 
         if (provider == Provider.Anthropic) {
-            return doHandleAnthropic((Model) (actualModel), lang, func, promptExtras);
+            return parseDotsWhileExecuting(
+                    CompletableFuture.supplyAsync(() -> doHandleAnthropic((Model) (actualModel), lang, func, promptExtras)));
         }
 
         return null;
@@ -88,4 +93,25 @@ public class LlmConnectionClient {
         return response.text();
     }
 
+    private static ResponseFormat parseDotsWhileExecuting(CompletableFuture<ResponseFormat> future){
+        System.out.println("Generating document.");
+        long start = System.currentTimeMillis();
+
+        while (!future.isDone()){
+            long elapsed = (System.currentTimeMillis() - start) / 1000;
+            if(elapsed > 1){
+                System.out.print(".");
+                start = System.currentTimeMillis();
+            }
+        }
+
+        try{
+            return future.get();
+        }
+        catch (ExecutionException | InterruptedException e){
+            ExitUtil.exitWithErrorMessage("Error while generating the document. Please try again later.");
+        }
+
+        return null;
+    }
 }
