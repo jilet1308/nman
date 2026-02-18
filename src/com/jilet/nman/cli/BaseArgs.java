@@ -18,8 +18,8 @@ import java.util.concurrent.Callable;
 
 @Command(
         name = "nman",
-        version = "nman 0.0.1-SNAPSHOT",
-        subcommands = {SetupArgs.class, LangArgs.class},
+        version = "nman 0.0.1",
+        subcommands = {SetupArgs.class, LangArgs.class, ModelArgs.class},
         mixinStandardHelpOptions = true
 )
 public class BaseArgs implements Callable<Integer> {
