@@ -8,10 +8,29 @@
     <artifactId>nman</artifactId>
     <version>0.0.1</version>
 
+    <developers>
+        <developer>
+            <name>Ismail D. Cokluk</name>
+            <id>jilet1308</id>
+            <timezone>UTC+03:00 / Istanbul</timezone>
+        </developer>
+    </developers>
+
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Versioning -->
+        <picocli.version>4.7.7</picocli.version>
+        <lombok.version>1.18.42</lombok.version>
+        <anthropic-java.version>2.14.0</anthropic-java.version>
+        <openai-java.version>4.21.0</openai-java.version>
+        <slf4j-nop.version>2.0.17</slf4j-nop.version>
+        <maven-jar-plugin.version>3.4.1</maven-jar-plugin.version>
+        <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
+        <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
+
     </properties>
 
     <packaging>jar</packaging>
@@ -20,35 +39,34 @@
         <dependency>
             <groupId>info.picocli</groupId>
             <artifactId>picocli</artifactId>
-            <version>4.7.7</version>
+            <version>${picocli.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.42</version>
+            <version>${lombok.version}</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>com.anthropic</groupId>
             <artifactId>anthropic-java</artifactId>
-            <version>2.14.0</version>
+            <version>${anthropic-java.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.openai</groupId>
             <artifactId>openai-java</artifactId>
-            <version>4.21.0</version>
+            <version>${openai-java.version}</version>
         </dependency>
 
         <!--    Mute SLF4J        -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-nop</artifactId>
-            <version>2.0.17</version>
+            <version>${slf4j-nop.version}</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -57,7 +75,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>${maven-jar-plugin.version}</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -70,7 +88,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>${maven-shade-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -92,13 +110,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.15.0</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.18.42</version>
+                            <version>${lombok.version}</version>
                         </path>
                     </annotationProcessorPaths>
                     <compilerArgs>

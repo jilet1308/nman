@@ -5,9 +5,9 @@
 3) ~~Replace sout+System.exit with ExitUtil~~ (10:57 17-02-2026)
 4) ~~Infer the provider from model name~~ (08:08 18-02-2026) 
 5) ~~Add configurable max. token length~~ (13:08 17-02-2026)
-6) Better format for the generated document before parsing it to the file
+6) ~~Better format for the generated document before parsing it to the file~~ (09:12 18-02-2026)
 7) ~~Model ls command to list supported models and their providers~~ (08:58 18-02-2026)
-8) pom re-organization and cleanup
+8) ~~pom re-organization and cleanup~~ (09:16 18-02-2026)
 9) Add 'glow exists' check
 10) Add . (dot) loading animation while the document is being generated
 11) Refine the help section
