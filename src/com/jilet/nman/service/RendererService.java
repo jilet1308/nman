@@ -2,6 +2,9 @@ package com.jilet.nman.service;
 
 import com.jilet.nman.common.ExitUtil;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class RendererService {
@@ -37,6 +40,24 @@ public class RendererService {
         } catch (IOException | InterruptedException e) {
             ExitUtil.exitWithErrorMessage("Error trying to render the file: %s", name);
         }
+    }
+
+    public static void parseFileContent(File file) {
+        if (!file.canRead()) {
+            ExitUtil.exitWithErrorMessage("File is not readable: %s", file.getAbsolutePath());
+        }
+
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            ExitUtil.exitWithErrorMessage("Error while reading: %s", file.getAbsolutePath());
+        }
+
+
     }
 
 }

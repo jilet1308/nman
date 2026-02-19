@@ -12,7 +12,7 @@
 10) ~~Add . (dot) loading animation while the document is being generated~~ (10:49 18-02-2026)
 11) Health check command
 12) Refine the help section
-13) setup command with no args should parse the current configurations
+13) ~~setup command with no args should parse the current configurations~~ (21:35 19-02-2026)
 14) Better crypto (or remove it all together ?)
 15) Add to PATH and alias script
 16) Curl & wget install script

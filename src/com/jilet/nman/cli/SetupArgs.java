@@ -1,7 +1,7 @@
 package com.jilet.nman.cli;
 
-import com.jilet.nman.common.ExitUtil;
 import com.jilet.nman.service.ConfigurationService;
+import com.jilet.nman.service.RendererService;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -9,7 +9,7 @@ import java.util.concurrent.Callable;
 
 @Command(name = "setup",
         mixinStandardHelpOptions = true,
-        description = "Alter/Setup configurations")
+        description = "Alter/Setup/View configurations. Shows current configuration if no options provided.")
 public class SetupArgs implements Callable<Integer> {
 
     @Option(names = {"--model", "-m"},
@@ -39,8 +39,8 @@ public class SetupArgs implements Callable<Integer> {
 
     @Override
     public Integer call() {
-        if(model.isBlank() && apiKey.isBlank() && home.isBlank() && maxTokens.isBlank() && customRenderer.isBlank()) {
-            ExitUtil.exitWithErrorMessage("Should provide at least one option to the setup command!");
+        if (model.isBlank() && apiKey.isBlank() && home.isBlank() && maxTokens.isBlank() && customRenderer.isBlank()) {
+            parseCurrentConfig();
         }
 
         if (!model.isBlank()) {
@@ -52,14 +52,18 @@ public class SetupArgs implements Callable<Integer> {
         if (!home.isBlank()) {
             ConfigurationService.setDocumentHome(home);
         }
-        if(!maxTokens.isBlank()){
+        if (!maxTokens.isBlank()) {
             ConfigurationService.setMaxTokens(maxTokens);
         }
-        if(!customRenderer.isBlank()) {
+        if (!customRenderer.isBlank()) {
             ConfigurationService.setCustomRenderer(customRenderer);
         }
 
         return 0;
+    }
+
+    private void parseCurrentConfig() {
+        RendererService.parseFileContent(ConfigurationService.CONFIG_FILE_PATH.toFile());
     }
 
 }
