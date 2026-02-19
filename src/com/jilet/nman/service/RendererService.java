@@ -12,12 +12,14 @@ public class RendererService {
     public static void checkRendererAvailable() {
         String command = ConfigurationService.getCustomRenderer().orElse(DEFAULT_RENDERER_COMMAND);
         try {
-            int process = new ProcessBuilder(command, "--version")
-                    .inheritIO()
-                    .start()
-                    .waitFor();
+            ProcessBuilder pb = new ProcessBuilder(command, "--version");
+            pb.redirectOutput(ProcessBuilder.Redirect.DISCARD);
+            pb.redirectErrorStream(true);
+            pb.redirectOutput(ProcessBuilder.Redirect.DISCARD);
 
-            if(process != 0) {
+            int process = pb.start().waitFor();
+
+            if (process != 0) {
                 ExitUtil.exitWithErrorMessage("Renderer %s is not available. Please install it and try again.", command);
             }
         } catch (IOException | InterruptedException e) {
