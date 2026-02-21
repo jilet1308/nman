@@ -11,16 +11,17 @@
 9) ~~Add 'glow exists' check~~ (09:46 18-02-2026)
 10) ~~Add . (dot) loading animation while the document is being generated~~ (10:49 18-02-2026)
 11) ~~Health check command~~  (Won't do. Current error messages already tell the whole story)
-12) Refine the help section
+12) ~~Refine the help section~~ (22:53 21-02-2026)
 13) ~~setup command with no args should parse the current configurations~~ (21:35 19-02-2026)
 14) <u>Better crypto (or remove it all together ?)</u>  (Will do depending on <b>feedback</b>)
 15) Add to PATH and alias script
 16) Curl & wget install script
 17) Brew formulae
+18) ~~More languages~~ (22:58 21-02-2026)
 
 ## Future Plans
 
-1) Gemini, Perplexity etc. support
+1) Gemini, ~~Perplexity~~ etc. support
 2) ~~<u>Externalized LlmModel list for easier updates</u>~~ (Won't do. Current model is good)
 3) Windows support
 4) Support different file formats for the docs
