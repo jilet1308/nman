@@ -20,7 +20,8 @@ import java.util.concurrent.Callable;
         name = "nman",
         version = "nman 0.0.1",
         subcommands = {SetupArgs.class, LangArgs.class, ModelArgs.class},
-        mixinStandardHelpOptions = true
+        mixinStandardHelpOptions = true,
+        description = "Generate man-like documentation pages."
 )
 public class BaseArgs implements Callable<Integer> {
 
@@ -33,15 +34,15 @@ public class BaseArgs implements Callable<Integer> {
 
     @Parameters(index = "1",
             arity = "0**1",
-            description = "Function/Method/Macro to search and generate doc for.")
+            description = "Function to search and generate doc for.")
     String func;
 
     @Option(names = {"--override", "-o"},
-            description = "Whether to override the cached document with a new one")
+            description = "Whether to override the cached document with a new one.")
     boolean override;
 
     @Option(names = {"--prompt-customize", "-p"},
-            description = "Extra customization and context for document generation prompt")
+            description = "Extra customization and context for document generation prompt.")
     String prompt;
 
 
@@ -54,11 +55,10 @@ public class BaseArgs implements Callable<Integer> {
 
         validateLang();
 
-        if(override){
+        if (override) {
             Path generatedDoc = generateDocument();
             RendererService.renderDocument(generatedDoc.toString());
-        }
-        else{
+        } else {
             handleDefault();
         }
 
@@ -76,33 +76,31 @@ public class BaseArgs implements Callable<Integer> {
         }
     }
 
-    private void handleDefault(){
+    private void handleDefault() {
         Path cached = getCachedDocument();
-        if(cached != null){
+        if (cached != null) {
             RendererService.renderDocument(cached.toString());
-        }
-        else{
+        } else {
             Path generatedDoc = generateDocument();
             RendererService.renderDocument(generatedDoc.toString());
         }
     }
 
-    private Path getCachedDocument(){
+    private Path getCachedDocument() {
         Path cachedDocPath = FileService.getFunctionDocPath(func);
-        if(cachedDocPath != null){
+        if (cachedDocPath != null) {
             return cachedDocPath;
         }
         return null;
     }
 
-    private Path generateDocument(){
+    private Path generateDocument() {
         ResponseFormat formattedResponse = LlmConnectionClient.sendRequest(ConfigurationService.getProvider(), ConfigurationService.getLlmModelDescriptor(), lang, func, prompt);
-        if(formattedResponse == null){
+        if (formattedResponse == null) {
             ExitUtil.exitWithErrorMessage("Failed to get a valid response from the LLM. Please try again later.");
         }
         return FileService.createDocument(ConfigurationService.getDocumentHome().toString(), lang, func, formattedResponse);
     }
-
 
 
 }

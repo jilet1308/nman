@@ -13,27 +13,27 @@ import java.util.concurrent.Callable;
 public class SetupArgs implements Callable<Integer> {
 
     @Option(names = {"--model", "-m"},
-            description = "Model to use from the given provider",
+            description = "Model to use from the given provider.",
             defaultValue = "")
     String model;
 
     @Option(names = {"--apiKey", "--key", "-k"},
-            description = "API Key",
+            description = "API Key.",
             defaultValue = "")
     String apiKey;
 
     @Option(names = {"--home", "-e"},
-            description = "Where to store the generated documents",
+            description = "Where to store the generated documents.",
             defaultValue = "")
     String home;
 
     @Option(names = {"--maxTokens", "-t"},
-            description = "Max tokens to use when generating documents (default: 8192)",
+            description = "Max tokens to use when generating documents (default: 8192).",
             defaultValue = "")
     String maxTokens;
 
     @Option(names = {"--customRenderer", "-c"},
-            description = "Custom command to render the generated documents (default: glow)",
+            description = "Custom command to render the generated documents (default: glow).",
             defaultValue = "")
     String customRenderer;
 

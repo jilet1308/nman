@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.concurrent.Callable;
 
 
-@Command(name = "langs", description = "Show language alternate names")
+@Command(name = "lang", description = "Show possible language arguments which are acceptable by the <lang> argument of the base command.")
 public class LangArgs implements Callable<Integer> {
 
     @Override

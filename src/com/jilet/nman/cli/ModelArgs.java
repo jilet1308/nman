@@ -5,7 +5,7 @@ import picocli.CommandLine.Command;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
 
-@Command(name = "models", description = "Show model providers and their models (with alternate names accepted by nman)")
+@Command(name = "models", description = "Show model providers and their models which are applicable as the <model> argument for the setup command.")
 public class ModelArgs implements Callable<Integer> {
 
     @Override

@@ -10,10 +10,10 @@
 8) ~~pom re-organization and cleanup~~ (09:16 18-02-2026)
 9) ~~Add 'glow exists' check~~ (09:46 18-02-2026)
 10) ~~Add . (dot) loading animation while the document is being generated~~ (10:49 18-02-2026)
-11) Health check command
+11) ~~Health check command~~  (Won't do. Current error messages already tell the whole story)
 12) Refine the help section
 13) ~~setup command with no args should parse the current configurations~~ (21:35 19-02-2026)
-14) Better crypto (or remove it all together ?)
+14) <u>Better crypto (or remove it all together ?)</u>  (Will do depending on <b>feedback</b>)
 15) Add to PATH and alias script
 16) Curl & wget install script
 17) Brew formulae
