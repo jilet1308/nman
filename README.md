@@ -90,6 +90,51 @@ nman c malloc
 | C | `c`, `clang` |
 | C++ | `cpp`, `c++`, `cplusplus` |
 | Go | `go`, `golang` |
+| Python | `python`, `py`, `python3`, `py3` |
+| Rust | `rust`, `rs`, `rustlang` |
+| JavaScript | `javascript`, `js`, `node`, `nodejs` |
+| TypeScript | `typescript`, `ts`, `tsc` |
+| Ruby | `ruby`, `rb` |
+| Swift | `swift` |
+| Kotlin | `kotlin`, `kt`, `kts` |
+| Scala | `scala`, `sc` |
+| C# | `csharp`, `c#`, `cs`, `dotnet` |
+| PHP | `php`, `php8` |
+| Perl | `perl`, `pl` |
+| Lua | `lua` |
+| R | `r`, `rlang` |
+| Dart | `dart`, `flutter` |
+| Elixir | `elixir`, `ex`, `exs` |
+| Erlang | `erlang`, `erl` |
+| Haskell | `haskell`, `hs` |
+| Clojure | `clojure`, `clj`, `cljs` |
+| OCaml | `ocaml`, `ml` |
+| F# | `fsharp`, `f#`, `fs` |
+| Zig | `zig` |
+| Nim | `nim` |
+| Julia | `julia`, `jl` |
+| Objective-C | `objectivec`, `objc`, `obj-c` |
+| Assembly | `assembly`, `asm`, `nasm`, `masm` |
+| Bash | `bash`, `sh`, `shell`, `zsh` |
+| PowerShell | `powershell`, `pwsh`, `ps1` |
+| SQL | `sql`, `plsql`, `tsql`, `mysql`, `postgresql` |
+| Groovy | `groovy`, `gvy` |
+| MATLAB | `matlab`, `m` |
+| Fortran | `fortran`, `f90`, `f95` |
+| COBOL | `cobol`, `cob` |
+| Lisp | `lisp`, `commonlisp`, `cl` |
+| Scheme | `scheme`, `scm`, `racket` |
+| Prolog | `prolog`, `pl` |
+| Ada | `ada`, `adb`, `ads` |
+| Pascal | `pascal`, `pas`, `delphi` |
+| D | `d`, `dlang` |
+| V | `v`, `vlang` |
+| Crystal | `crystal`, `cr` |
+| Solidity | `solidity`, `sol` |
+| Vyper | `vyper`, `vy` |
+| Move | `move` |
+| WASM | `wasm`, `webassembly`, `wat` |
+| Carbon | `carbon` |
 
 ## 🤖 Supported Models
 
